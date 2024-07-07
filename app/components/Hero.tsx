@@ -1,6 +1,3 @@
-// app/components/Hero.tsx
-// will make coords based on server members (that opt in)
-
 'use client';
 
 import React, { useEffect, useRef } from 'react';
@@ -11,40 +8,42 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 const DeltaCoHero = () => {
-  const canvasRef = useRef();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     let phi = 0;
 
-    const globe = createGlobe(canvasRef.current, {
-      devicePixelRatio: 2,
-      width: 600 * 2,
-      height: 600 * 2,
-      phi: 0,
-      theta: 0,
-      dark: 1,
-      diffuse: 1.2,
-      mapSamples: 16000,
-      mapBrightness: 6,
-      baseColor: [0.3, 0.3, 0.3],
-      markerColor: [0.694, 0.651, 0.533], // Converted #b1a688 to RGB
-      glowColor: [0.694, 0.651, 0.533],
-      markers: [
-        { location: [37.7595, -122.4367], size: 0.03 }, // San Francisco
-        { location: [40.7128, -74.006], size: 0.1 },    // New York
-        { location: [51.5074, -0.1278], size: 0.05 },   // London
-        { location: [35.6762, 139.6503], size: 0.08 },  // Tokyo
-        { location: [-33.8688, 151.2093], size: 0.06 }, // Sydney
-      ],
-      onRender: (state) => {
-        state.phi = phi;
-        phi += 0.003;
-      }
-    });
+    if (canvasRef.current) {
+      const globe = createGlobe(canvasRef.current, {
+        devicePixelRatio: 2,
+        width: 600 * 2,
+        height: 600 * 2,
+        phi: 0,
+        theta: 0,
+        dark: 1,
+        diffuse: 1.2,
+        mapSamples: 16000,
+        mapBrightness: 6,
+        baseColor: [0.3, 0.3, 0.3],
+        markerColor: [0.694, 0.651, 0.533], // Converted #b1a688 to RGB
+        glowColor: [0.694, 0.651, 0.533],
+        markers: [
+          { location: [37.7595, -122.4367], size: 0.03 }, // San Francisco
+          { location: [40.7128, -74.006], size: 0.1 },    // New York
+          { location: [51.5074, -0.1278], size: 0.05 },   // London
+          { location: [35.6762, 139.6503], size: 0.08 },  // Tokyo
+          { location: [-33.8688, 151.2093], size: 0.06 }, // Sydney
+        ],
+        onRender: (state) => {
+          state.phi = phi;
+          phi += 0.003;
+        }
+      });
 
-    return () => {
-      globe.destroy();
-    };
+      return () => {
+        globe.destroy();
+      };
+    }
   }, []);
 
   return (
@@ -83,8 +82,8 @@ const DeltaCoHero = () => {
         <CardContent className="p-6">
           <h2 className="text-2xl font-bold text-[#b1a688] mb-4">Global Gaming Network</h2>
           <p className="text-gray-300">
-            Join our worldwide community of gamers. With servers across multiple continents, 
-            Delta Co Gaming offers low-latency gameplay and a diverse player base for an 
+            Join our worldwide community of gamers. With servers across multiple continents,
+            Delta Co Gaming offers low-latency gameplay and a diverse player base for an
             unparalleled gaming experience.
           </p>
         </CardContent>

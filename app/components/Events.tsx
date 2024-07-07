@@ -1,3 +1,5 @@
+// app/components/Events.tsx (TODO AT THE BOTTOM)
+
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -12,9 +14,32 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { toast, Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/toaster";
 
-const fetchEvents = () => {
+interface Participant {
+  id: number;
+  name: string;
+}
+
+interface Event {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+  participants: Participant[];
+  maxParticipants: number;
+  prize: string;
+  tags: string[];
+  hostAvatar: string;
+  hostName: string;
+}
+
+interface UserData {
+  username: string;
+  steamId: string;
+}
+
+const fetchEvents = (): Promise<Event[]> => {
   // Simulated API call with more events
   return Promise.resolve([
     {
@@ -45,19 +70,24 @@ const fetchEvents = () => {
   ]);
 };
 
-const signUpForEvent = (eventId, userData) => {
+const signUpForEvent = (eventId: number, userData: UserData): Promise<{ success: boolean }> => {
   console.log(`User ${userData.username} (Steam64 ID: ${userData.steamId}) signed up for event ${eventId}`);
   return Promise.resolve({ success: true });
 };
 
-const EventCard = ({ event, onSignUp }) => {
+interface EventCardProps {
+  event: Event;
+  onSignUp: (eventId: number, userData: UserData) => Promise<{ success: boolean }>;
+}
+
+const EventCard: React.FC<EventCardProps> = ({ event, onSignUp }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleSignUp = async (userData) => {
+  const handleSignUp = async (userData: UserData) => {
     const result = await onSignUp(event.id, userData);
     if (result.success) {
       setIsDialogOpen(false);
-      toast({
+      Toaster({
         title: "Successfully signed up!",
         description: `You've been registered for ${event.title}.`,
       });
@@ -117,12 +147,12 @@ const EventCard = ({ event, onSignUp }) => {
                   Enter your details to join this exciting event!
                 </DialogDescription>
               </DialogHeader>
-              <form onSubmit={(e) => {
+              <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
-                const formData = new FormData(e.target);
+                const formData = new FormData(e.currentTarget);
                 handleSignUp({
-                  username: formData.get('username'),
-                  steamId: formData.get('steamId')
+                  username: formData.get('username') as string,
+                  steamId: formData.get('steamId') as string
                 });
               }}>
                 <div className="grid gap-4 py-4">
@@ -151,16 +181,22 @@ const EventCard = ({ event, onSignUp }) => {
   );
 };
 
-const CustomCalendar = ({ events, selectedDate, setSelectedDate }) => {
+interface CustomCalendarProps {
+  events: Event[];
+  selectedDate: Date;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+}
+
+const CustomCalendar: React.FC<CustomCalendarProps> = ({ events, selectedDate, setSelectedDate }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const daysInMonth = (date) => {
+  const daysInMonth = (date: Date): number => {
     const year = date.getFullYear();
     const month = date.getMonth();
     return new Date(year, month + 1, 0).getDate();
   };
 
-  const startOfMonth = (date) => {
+  const startOfMonth = (date: Date): number => {
     return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
   };
 
@@ -212,20 +248,20 @@ const CustomCalendar = ({ events, selectedDate, setSelectedDate }) => {
   );
 };
 
-const EventsDashboard = () => {
-  const [events, setEvents] = useState([]);
+const EventsDashboard: React.FC = () => {
+  const [events, setEvents] = useState<Event[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     fetchEvents().then(setEvents);
   }, []);
 
-  const handleSignUp = async (eventId, userData) => {
+  const handleSignUp = async (eventId: number, userData: UserData) => {
     const result = await signUpForEvent(eventId, userData);
     if (result.success) {
       setEvents(events.map(event => 
         event.id === eventId
-          ? { ...event, participants: [...event.participants, { id: userData.steamId, name: userData.username }] }
+          ? { ...event, participants: [...event.participants, { id: parseInt(userData.steamId), name: userData.username }] }
           : event
       ));
     }
@@ -238,7 +274,7 @@ const EventsDashboard = () => {
 
   const upcomingEvents = events
     .filter(event => parseISO(event.date) >= new Date())
-    .sort((a, b) => parseISO(a.date) - parseISO(b.date))
+    .sort((a, b) => parseISO(a.date).getTime() - parseISO(b.date).getTime())
     .slice(0, 5);
 
   return (
@@ -305,9 +341,22 @@ const EventsDashboard = () => {
         </div>
       </div>
       
-      <Toaster />
-    </div>
+      <Toaster title={''} description={''} />
+      </div>
   );
 };
 
 export default EventsDashboard;
+
+
+
+
+/*
+ * TODO: 
+
+  - Use NEXT IMAGE for the images
+  - Add a loading spinner while fetching events
+  - Make the hover not cover the number of the day
+  - Change Thumbnail to a better one
+  - FIX : Weird card as the top the color is not being wrapped correctly within the card. 
+ */

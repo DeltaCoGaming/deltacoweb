@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 
-export function Toaster() {
+export function Toaster(p0: { title: string; description: string }) {
   const { toasts } = useToast()
 
   return (
