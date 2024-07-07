@@ -1,0 +1,33 @@
+{
+    "mods": [
+      {
+        "name": "ISRC Taiwan Zeus OP",
+        "description": "For the community Zeus OP's month 4",
+        "version": "1.0.0",
+        "category": "ARMA3",
+        "filename": "ISRC Taiwan.html",
+        "downloadable": true
+      },
+      {
+        "name": "Improved Textures",
+        "description": "High-resolution texture pack",
+        "version": "2.1.0",
+        "category": "ARMA3",
+        "filename": "improved_textures.zip",
+        "downloadable": true
+      }
+    ],
+    "communityLinks": [
+      {
+        "name": "Project Zomboid Community Pack",
+        "description": "A curated list of Project Zomboid mods.",
+        "url": "https://example.com/pz-community-pack"
+      },
+      {
+        "name": "Minecraft Server Mods",
+        "description": "Essential mods for Minecraft servers.",
+        "url": "https://example.com/minecraft-mods"
+      }
+    ]
+  }
+  

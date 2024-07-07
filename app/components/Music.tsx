@@ -1,59 +1,51 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { format, parseISO, isSameDay } from 'date-fns';
-import { Calendar as CalendarIcon, Clock, Users, Trophy, Tag, Gamepad } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { format, parseISO, isSameMonth, isSameDay, addMonths, subMonths } from 'date-fns';
+import { CalendarIcon, Clock, Users, Trophy, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Calendar } from "@/components/ui/calendar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { toast, Toaster } from "@/components/ui/toaster";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast, Toaster } from "@/components/ui/toaster";
 
-// Simulated data and functions (replace with actual API calls in a real application)
 const fetchEvents = () => {
-  // Simulated API call
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        {
-          id: 1,
-          title: "Fortnite Tournament",
-          description: "Battle Royale showdown with exclusive skins for top performers!",
-          date: "2024-07-15T18:00:00Z",
-          participants: [{ id: 1, name: "Player1" }, { id: 2, name: "Player2" }],
-          maxParticipants: 100,
-          prize: "$500 Steam Gift Card",
-          tags: ["competitive", "battle-royale", "prizes"],
-          hostAvatar: "/path/to/host-avatar.jpg",
-          hostName: "GameMaster42"
-        },
-        {
-          id: 2,
-          title: "Minecraft Build Challenge",
-          description: "Create the most impressive castle in 2 hours!",
-          date: "2024-07-20T20:00:00Z",
-          participants: [{ id: 3, name: "Player3" }],
-          maxParticipants: 50,
-          prize: "Custom Discord Role",
-          tags: ["creative", "building", "timed"],
-          hostAvatar: "/path/to/another-avatar.jpg",
-          hostName: "BlockWizard"
-        },
-        // Add more events as needed
-      ]);
-    }, 1000);
-  });
+  // Simulated API call with more events
+  return Promise.resolve([
+    {
+      id: 1,
+      title: "Fortnite Tournament",
+      description: "Battle Royale showdown with exclusive skins for top performers!",
+      date: "2024-07-15T18:00:00Z",
+      participants: [{ id: 1, name: "Player1" }, { id: 2, name: "Player2" }],
+      maxParticipants: 100,
+      prize: "$500 Steam Gift Card",
+      tags: ["competitive", "battle-royale", "prizes"],
+      hostAvatar: "/path/to/host-avatar.jpg",
+      hostName: "GameMaster42"
+    },
+    {
+      id: 2,
+      title: "Minecraft Build Challenge",
+      description: "Show off your creativity in this epic build battle!",
+      date: "2024-07-20T15:00:00Z",
+      participants: [{ id: 3, name: "Builder1" }],
+      maxParticipants: 50,
+      prize: "Exclusive in-game items",
+      tags: ["creative", "building", "multiplayer"],
+      hostAvatar: "/path/to/host-avatar2.jpg",
+      hostName: "BlockMaster"
+    },
+    // Add more events as needed
+  ]);
 };
 
 const signUpForEvent = (eventId, userData) => {
-  // Simulated API call
   console.log(`User ${userData.username} (Steam64 ID: ${userData.steamId}) signed up for event ${eventId}`);
   return Promise.resolve({ success: true });
 };
@@ -73,155 +65,164 @@ const EventCard = ({ event, onSignUp }) => {
   };
 
   return (
-    <Card className="w-full bg-gradient-to-br from-purple-900 to-indigo-900 text-white shadow-xl">
-      <CardHeader>
-        <CardTitle className="text-2xl font-extrabold">{event.title}</CardTitle>
-        <CardDescription className="text-lg text-purple-200">{event.description}</CardDescription>
+    <Card className="w-full bg-white text-black shadow-xl border-2 border-[#b1a688] mb-4">
+      <CardHeader className="bg-[#b1a688] text-white">
+        <CardTitle className="text-xl font-bold">{event.title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="flex justify-between items-center mb-4">
+      <CardContent className="pt-4">
+        <p className="text-sm mb-2">{event.description}</p>
+        <div className="grid grid-cols-2 gap-2 mb-2 text-sm">
           <div className="flex items-center space-x-2">
-            <CalendarIcon className="h-5 w-5 text-purple-300" />
+            <CalendarIcon className="h-4 w-4 text-[#b1a688]" />
             <span>{format(parseISO(event.date), 'PPP')}</span>
           </div>
           <div className="flex items-center space-x-2">
-            <Clock className="h-5 w-5 text-purple-300" />
+            <Clock className="h-4 w-4 text-[#b1a688]" />
             <span>{format(parseISO(event.date), 'p')}</span>
           </div>
-        </div>
-        <div className="flex justify-between items-center mb-4">
           <div className="flex items-center space-x-2">
-            <Users className="h-5 w-5 text-purple-300" />
+            <Users className="h-4 w-4 text-[#b1a688]" />
             <span>{event.participants.length} / {event.maxParticipants}</span>
           </div>
           <div className="flex items-center space-x-2">
-            <Trophy className="h-5 w-5 text-yellow-400" />
-            <span className="font-bold text-yellow-400">{event.prize}</span>
+            <Trophy className="h-4 w-4 text-[#b1a688]" />
+            <span className="font-bold">{event.prize}</span>
           </div>
         </div>
-        <div className="flex flex-wrap gap-2 mt-4">
+        <div className="flex flex-wrap gap-1 mb-2">
           {event.tags.map((tag, index) => (
-            <Badge key={index} variant="secondary" className="bg-purple-700 text-white">
-              <Tag className="h-3 w-3 mr-1" />
+            <Badge key={index} variant="outline" className="text-xs border-[#b1a688] text-[#b1a688]">
               {tag}
             </Badge>
           ))}
         </div>
-      </CardContent>
-      <CardFooter className="flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <Avatar>
-            <AvatarImage src={event.hostAvatar} alt={event.hostName} />
-            <AvatarFallback>{event.hostName.slice(0, 2)}</AvatarFallback>
-          </Avatar>
-          <span>Hosted by {event.hostName}</span>
+        <div className="flex justify-between items-center">
+          <div className="flex items-center space-x-2">
+            <Avatar className="h-6 w-6">
+              <AvatarImage src={event.hostAvatar} alt={event.hostName} />
+              <AvatarFallback>{event.hostName.slice(0, 2)}</AvatarFallback>
+            </Avatar>
+            <span className="text-xs">Hosted by {event.hostName}</span>
+          </div>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button size="sm" className="bg-[#b1a688] hover:bg-[#9a8f73] text-white">
+                Join
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="bg-white text-black">
+              <DialogHeader>
+                <DialogTitle>Sign Up for {event.title}</DialogTitle>
+                <DialogDescription>
+                  Enter your details to join this exciting event!
+                </DialogDescription>
+              </DialogHeader>
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                handleSignUp({
+                  username: formData.get('username'),
+                  steamId: formData.get('steamId')
+                });
+              }}>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-right">
+                      Username
+                    </Label>
+                    <Input id="username" name="username" className="col-span-3" />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="steamId" className="text-right">
+                      Steam64 ID
+                    </Label>
+                    <Input id="steamId" name="steamId" className="col-span-3" />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button type="submit" className="bg-[#b1a688] hover:bg-[#9a8f73] text-white">Sign Up</Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-purple-600 hover:bg-purple-700">
-              Join Event
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Sign Up for {event.title}</DialogTitle>
-              <DialogDescription>
-                Enter your details to join this exciting event!
-              </DialogDescription>
-            </DialogHeader>
-            <form onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.target);
-              handleSignUp({
-                username: formData.get('username'),
-                steamId: formData.get('steamId')
-              });
-            }}>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="username" className="text-right">
-                    Username
-                  </Label>
-                  <Input id="username" name="username" className="col-span-3" />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="steamId" className="text-right">
-                    Steam64 ID
-                  </Label>
-                  <Input id="steamId" name="steamId" className="col-span-3" />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button type="submit">Sign Up</Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </CardFooter>
+      </CardContent>
     </Card>
   );
 };
 
-const EventCalendar = ({ events, onSelectDate, selectedDate }) => {
+const CustomCalendar = ({ events, selectedDate, setSelectedDate }) => {
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const daysInMonth = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    return new Date(year, month + 1, 0).getDate();
+  };
+
+  const startOfMonth = (date) => {
+    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  };
+
+  const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
+  const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
+
+  const days = daysInMonth(currentMonth);
+  const startDay = startOfMonth(currentMonth);
+
   return (
-    <Calendar
-      mode="single"
-      selected={selectedDate}
-      onSelect={onSelectDate}
-      className="rounded-md border shadow"
-      components={{
-        day: ({ day, date }) => {
-          const eventsOnDay = events.filter(event => isSameDay(parseISO(event.date), date));
+    <div className="bg-white p-4 rounded-lg shadow">
+      <div className="flex justify-between items-center mb-4">
+        <Button onClick={prevMonth} variant="outline" size="icon">
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
+        <h2 className="text-lg font-semibold">{format(currentMonth, 'MMMM yyyy')}</h2>
+        <Button onClick={nextMonth} variant="outline" size="icon">
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+      <div className="grid grid-cols-7 gap-1 text-center">
+        {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
+          <div key={day} className="text-sm font-medium text-gray-400">
+            {day}
+          </div>
+        ))}
+        {Array.from({ length: startDay }).map((_, index) => (
+          <div key={`empty-${index}`} />
+        ))}
+        {Array.from({ length: days }).map((_, index) => {
+          const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), index + 1);
+          const isSelected = isSameDay(date, selectedDate);
+          const hasEvents = events.some(event => isSameDay(parseISO(event.date), date));
           return (
-            <div className="relative">
-              <Button
-                variant="ghost"
-                className={`w-9 h-9 p-0 font-normal ${
-                  eventsOnDay.length > 0 ? 'bg-purple-100 hover:bg-purple-200' : ''
-                }`}
-              >
-                <time dateTime={date.toISOString()}>{day}</time>
-              </Button>
-              {eventsOnDay.length > 0 && (
-                <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2">
-                  <div className="w-1 h-1 bg-purple-500 rounded-full" />
-                </div>
-              )}
-            </div>
+            <Button
+              key={index}
+              variant="ghost"
+              className={`h-8 w-8 p-0 ${isSelected ? 'bg-[#b1a688] text-white' : ''} ${
+                hasEvents ? 'text-[#b1a688] font-bold' : ''
+              }`}
+              onClick={() => setSelectedDate(date)}
+            >
+              {index + 1}
+            </Button>
           );
-        },
-      }}
-    />
+        })}
+      </div>
+    </div>
   );
 };
-
-const EventList = ({ events, onSignUp }) => (
-  <ScrollArea className="h-[calc(100vh-200px)] w-full rounded-md border p-4">
-    <div className="space-y-4">
-      {events.map(event => (
-        <EventCard key={event.id} event={event} onSignUp={onSignUp} />
-      ))}
-    </div>
-  </ScrollArea>
-);
 
 const EventsDashboard = () => {
   const [events, setEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [activeTab, setActiveTab] = useState("calendar");
 
   useEffect(() => {
     fetchEvents().then(setEvents);
   }, []);
 
-  const filteredEvents = selectedDate
-    ? events.filter(event => isSameDay(parseISO(event.date), selectedDate))
-    : events;
-
   const handleSignUp = async (eventId, userData) => {
     const result = await signUpForEvent(eventId, userData);
     if (result.success) {
-      // Update the local state to reflect the sign-up
       setEvents(events.map(event => 
         event.id === eventId
           ? { ...event, participants: [...event.participants, { id: userData.steamId, name: userData.username }] }
@@ -231,55 +232,79 @@ const EventsDashboard = () => {
     return result;
   };
 
+  const filteredEvents = events.filter(event => 
+    isSameDay(parseISO(event.date), selectedDate)
+  );
+
+  const upcomingEvents = events
+    .filter(event => parseISO(event.date) >= new Date())
+    .sort((a, b) => parseISO(a.date) - parseISO(b.date))
+    .slice(0, 5);
+
   return (
-    <div className="p-8 bg-gray-900 min-h-screen text-white">
-      <h1 className="text-4xl font-bold text-center mb-8">Gaming Events Dashboard</h1>
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="calendar">Calendar View</TabsTrigger>
-          <TabsTrigger value="list">List View</TabsTrigger>
-        </TabsList>
-        <TabsContent value="calendar" className="mt-4">
-          <div className="flex space-x-8">
-            <div className="w-1/2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Event Calendar</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <EventCalendar 
-                    events={events} 
-                    onSelectDate={setSelectedDate} 
-                    selectedDate={selectedDate}
-                  />
-                </CardContent>
-              </Card>
+    <div className="p-8 bg-black min-h-screen pt-32 sm:pt-20">
+      <h1 className="text-4xl font-bold text-center mb-8 text-[#b1a688]">Gaming Events Dashboard</h1>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <Card className="col-span-1 bg-white">
+          <CardHeader>
+            <CardTitle className="text-[#b1a688]">Event Calendar</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CustomCalendar
+              events={events}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />
+            <div className="mt-6 text-center">
+              <img
+                src="/try.png"
+                alt="Gaming event illustration"
+                className="mx-auto rounded-lg shadow-md"
+              />
+              <p className="mt-4 text-sm text-gray-600">
+                Join exciting gaming events and compete with players from around the world!
+              </p>
             </div>
-            <div className="w-1/2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>
-                    {selectedDate ? `Events on ${format(selectedDate, 'PPP')}` : "All Upcoming Events"}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <EventList events={filteredEvents} onSignUp={handleSignUp} />
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </TabsContent>
-        <TabsContent value="list" className="mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>All Upcoming Events</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <EventList events={events} onSignUp={handleSignUp} />
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+          </CardContent>
+        </Card>
+        
+        <div className="col-span-1 lg:col-span-2">
+          <Tabs defaultValue="selected" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-4">
+              <TabsTrigger value="selected">Selected Date</TabsTrigger>
+              <TabsTrigger value="upcoming">Upcoming Events</TabsTrigger>
+            </TabsList>
+            <TabsContent value="selected">
+              <h2 className="text-2xl font-semibold text-[#b1a688] mb-4">
+                Events on {format(selectedDate, 'MMMM d, yyyy')}
+              </h2>
+              <ScrollArea className="h-[calc(100vh-300px)]">
+                {filteredEvents.length > 0 ? (
+                  filteredEvents.map(event => (
+                    <EventCard key={event.id} event={event} onSignUp={handleSignUp} />
+                  ))
+                ) : (
+                  <Card className="bg-white text-black p-6">
+                    <p className="text-center text-gray-500">No events scheduled for this date.</p>
+                  </Card>
+                )}
+              </ScrollArea>
+            </TabsContent>
+            <TabsContent value="upcoming">
+              <h2 className="text-2xl font-semibold text-[#b1a688] mb-4">
+                Upcoming Events
+              </h2>
+              <ScrollArea className="h-[calc(100vh-300px)]">
+                {upcomingEvents.map(event => (
+                  <EventCard key={event.id} event={event} onSignUp={handleSignUp} />
+                ))}
+              </ScrollArea>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+      
       <Toaster />
     </div>
   );
