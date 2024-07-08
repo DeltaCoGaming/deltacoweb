@@ -46,7 +46,7 @@ const GameServers = () => {
   useEffect(() => {
     const fetchServers = async () => {
       try {
-        const response = await axios.get('/api/servers');
+        const response = await axios.get('/api/battlemets/servers');
         setServers(response.data.map((server: { data: any; }) => server.data));
       } catch (error) {
         console.error('Error fetching server data:', error);
