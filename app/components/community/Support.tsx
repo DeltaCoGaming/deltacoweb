@@ -136,34 +136,34 @@ const DeltaCoSupport: React.FC = () => {
         </motion.div>
 
         <Tabs defaultValue="discord" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-black">
+          <TabsList className="grid w-full grid-cols-2 bg-gray-700">
             <TabsTrigger value="discord" className="data-[state=active]:bg-white/5 data-[state=active]:text-white">Discord Support</TabsTrigger>
             <TabsTrigger value="email" className="data-[state=active]:bg-white/5 data-[state=active]:text-white">Email Support</TabsTrigger>
           </TabsList>
           <TabsContent value="discord">
-            <Card className="mt-6 bg-black border-white/10">
+            <Card className="mt-6 bg-gray-700 border-[#b1a688]">
               <CardHeader>
-                <CardTitle className="text-white">Discord Support Form</CardTitle>
+                <CardTitle className="text-[#b1a688]">Discord Support Form</CardTitle>
                 <CardDescription className="text-gray-400">Fill out this form to get support through our Discord channel.</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="discordName" className="text-white">Discord Name</Label>
-                      <Input id="discordName" name="discordName" placeholder="Your Discord username" onChange={handleInputChange} className="bg-white/5 text-white border-white/10" />
+                      <Label htmlFor="discordName" className="text-[#b1a688]">Discord Name</Label>
+                      <Input id="discordName" name="discordName" placeholder="Your Discord username" onChange={handleInputChange} className="bg-white/5 text-white border-[#b1a688]" />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="discordId" className="text-white">Discord ID</Label>
-                      <Input id="discordId" name="discordId" placeholder="Your Discord ID" onChange={handleInputChange} className="bg-white/5 text-white border-white/10" />
+                      <Label htmlFor="discordId" className="text-[#b1a688]">Discord ID</Label>
+                      <Input id="discordId" name="discordId" placeholder="Your Discord ID" onChange={handleInputChange} className="bg-white/5 text-white border-[#b1a688]" />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="supportType" className="text-white">Support Type</Label>
+                      <Label htmlFor="supportType" className="text-[#b1a688]">Support Type</Label>
                       <Select name="supportType" onValueChange={(value) => setFormData(prev => ({ ...prev, supportType: value }))}>
-                        <SelectTrigger className="bg-white/5 text-white border-white/10">
+                        <SelectTrigger className="bg-white/5 text-white border-[#b1a688]">
                           <SelectValue placeholder="Select support type" />
                         </SelectTrigger>
-                        <SelectContent className="bg-black text-white">
+                        <SelectContent className="bg-gray-700 text-[#b1a688]">
                           <SelectItem value="technical">Technical Support</SelectItem>
                           <SelectItem value="billing">Billing Support</SelectItem>
                           <SelectItem value="general">General Inquiry</SelectItem>
@@ -171,9 +171,9 @@ const DeltaCoSupport: React.FC = () => {
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="urgency" className="text-white">Urgency</Label>
+                      <Label htmlFor="urgency" className="text-[#b1a688]">Urgency</Label>
                       <Select name="urgency" onValueChange={(value) => setFormData(prev => ({ ...prev, urgency: value }))}>
-                        <SelectTrigger className="bg-white/5 text-white border-white/10">
+                        <SelectTrigger className="bg-white/5 text-white border-[#b1a688]">
                           <SelectValue placeholder="Select urgency level" />
                         </SelectTrigger>
                         <SelectContent className="bg-black text-white">
@@ -185,16 +185,16 @@ const DeltaCoSupport: React.FC = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="description" className="text-white">Description</Label>
-                    <Textarea id="description" name="description" placeholder="Describe your issue..." onChange={handleInputChange} className="bg-white/5 text-white border-white/10" />
+                    <Label htmlFor="description" className="text-[#b1a688]">Description</Label>
+                    <Textarea id="description" name="description" placeholder="Describe your issue..." onChange={handleInputChange} className="bg-white/5 text-[#b1a688] border-[#b1a688]" />
                   </div>
                   <div className="flex items-center space-x-2">
                     <Checkbox id="receiveDm" name="receiveDm" onCheckedChange={(checked) => setFormData(prev => ({ ...prev, receiveDm: checked as boolean }))} />
-                    <Label htmlFor="receiveDm" className="text-white">Receive DM from support</Label>
+                    <Label htmlFor="receiveDm" className="text-[#b1a688]">Receive DM from support</Label>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="attachment" className="text-white">Attachment</Label>
-                    <Input id="attachment" name="attachment" type="file" onChange={(e) => setFormData(prev => ({ ...prev, attachment: e.target.files?.[0] || null }))} className="bg-white/5 text-white border-white/10" />
+                    <Label htmlFor="attachment" className="text-[#b1a688]">Attachment</Label>
+                    <Input id="attachment" name="attachment" type="file" onChange={(e) => setFormData(prev => ({ ...prev, attachment: e.target.files?.[0] || null }))} className="bg-white/5 text-[#b1a688] border-[#b1a688]" />
                   </div>
                   <Button type="submit" className="w-full bg-[#b1a688] text-black hover:bg-[#a09578]">
                     <Send className="mr-2 h-4 w-4" /> Submit
@@ -204,7 +204,7 @@ const DeltaCoSupport: React.FC = () => {
             </Card>
           </TabsContent>
           <TabsContent value="email">
-            <Card className="mt-6 bg-black border-white/10">
+            <Card className="mt-6 bg-gray-700 border-[#b1a688]">
               <CardHeader>
                 <CardTitle className="text-white">Email Support</CardTitle>
                 <CardDescription className="text-gray-400">Send an email to our support team for assistance.</CardDescription>
