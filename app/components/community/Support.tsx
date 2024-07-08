@@ -71,12 +71,12 @@ const DeltaCoSupport: React.FC = () => {
     };
   
     try {
-      const response = await axios.post('/api/support', formDataToSend);
+      const response = await axios.post('/api/discord/support', formDataToSend);
   
       if (response.status === 200) {
         setIsSubmitted(true);
       } else {
-        console.error('Failed to submit the support request.');
+        console.error('Failed to submit the support request. BO');
       }
     } catch (error) {
       console.error('Error submitting the support request:', error);

@@ -25,7 +25,7 @@ const MembersWidget = () => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('/api/members');
+      const response = await fetch('/api/discord/members');
       if (!response.ok) {
         throw new Error('Failed to fetch members');
       }
