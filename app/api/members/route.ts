@@ -1,13 +1,18 @@
 // app/api/members/route.ts
-// move id and widget url to env 
-
 import { NextResponse } from 'next/server';
+import dotenv from 'dotenv';
 
-const DISCORD_SERVER_ID = '1133120424054628352';
-const DISCORD_WIDGET_URL = `https://discord.com/api/guilds/${DISCORD_SERVER_ID}/widget.json`;
+dotenv.config();
+
+const DISCORD_SERVER_ID = process.env.DISCORD_SERVER_ID;
+const DISCORD_WIDGET_URL = process.env.DISCORD_WIDGET_URL;
 
 export async function GET(request: Request) {
   try {
+    if (!DISCORD_WIDGET_URL) {
+      throw new Error('Discord widget URL is not defined.');
+    }
+
     console.log('Fetching members from Discord API...');
     const response = await fetch(DISCORD_WIDGET_URL);
     if (!response.ok) {

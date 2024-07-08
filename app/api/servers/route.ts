@@ -2,16 +2,14 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const BATTLEMETRICS_API_URL = 'https://api.battlemetrics.com/servers';
-const SERVER_IDS = [
-  "27304883",
-  "630697",
-  "20151421",
-  '5103536',
-];
+const SERVER_IDS = process.env.SERVER_IDS?.split(',') || [];
 
-const API_KEY = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImQzNGE4NjIzMDVmZGI3NTMiLCJpYXQiOjE3MjAxOTIzMTcsIm5iZiI6MTcyMDE5MjMxNywiaXNzIjoiaHR0cHM6Ly93d3cuYmF0dGxlbWV0cmljcy5jb20iLCJzdWIiOiJ1cm46dXNlcjo3ODQyMjcifQ.eYb4iGmAGdsKGOOnUCjm27xAX8doCaRPefFzRZzPEmQ';
+const API_KEY = process.env.BATTLEMETRICS_API_KEY;
 
 export async function GET(req: NextRequest) {
   try {
@@ -28,4 +26,3 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to fetch server data' }, { status: 500 });
   }
 }
-

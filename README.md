@@ -1,22 +1,41 @@
+# Delta Co Gaming Website 🎮
 
-<h1 align="center">Delta CO Gaming Website</h1>
-<p align="center">SHIT GOES HERE</p>
 
-<p align="center">
-  <a href="https://github.com/wadedesign/deltaconextjs/graphs/contributors">
-    <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/wadedesign/deltaconextjs" />
-  </a>
-  <a href="https://github.com/wadedesign/deltaconextjs/issues">
-    <img alt="Issues" src="https://img.shields.io/github/issues/wadedesign/deltaconextjs" />
-  </a>
-  <a href="https://github.com/wadedesign/deltaconextjs/blob/master/LICENSE">
-    <img alt="Issues" src="https://img.shields.io/github/license/wadedesign/deltaconextjs" />
-  </a>
-  <a href="https://github.com/wadedesign/deltaconextjs/pulls">
-    <img alt="Issues" src="https://img.shields.io/github/issues-pr-closed/wadedesign/deltaconextjs" />
-  </a>
-  <a href="https://github.com/wadedesign/deltaconextjs/commits">
-    <img alt="Issues" src="https://img.shields.io/github/last-commit/wadedesign/deltaconextjs" />
-  </a>
-  <a href="https://github.com/wadedesign/deltaconextjs"><img alt="Statistics Graphs" src="https://repobeats.axiom.co/api/embed/966fb1f700b2ca070b73426ccafcc5dd2b7576fb.svg"></a>
-</p>
+Welcome to the official repository for the Delta Co Gaming website! This project aims to create an immersive and interactive platform for gamers to connect, compete, and celebrate their passion for gaming.
+
+## 🚀 Features
+
+- User profiles with customizable avatars
+- Real-time multiplayer game lobbies
+- Tournament organization and leaderboards
+- Game streaming integration
+- Community forums and chat rooms
+
+## 📊 Project Stats
+
+![GitHub stars](https://img.shields.io/github/stars/deltacoGaming/website?style=social)
+![GitHub forks](https://img.shields.io/github/forks/deltacoGaming/website?style=social)
+![GitHub issues](https://img.shields.io/github/issues/deltacoGaming/website)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/deltacoGaming/website)
+
+## 🛠️ Tech Stack
+
+- Frontend: Nextjs, Tailwind CSS, Radux
+- Backend: Nextjs 
+- Database: Turso/Supabase
+- CI/CD: Coolify
+
+###  Getting Started 
+
+1. Clone the repository
+2. Install dependencies
+3. Run the development server
+
+```bash
+npm run dev
+```
+
+> will run on 0.0.0.0 also 
+
+## 📝 License
+
