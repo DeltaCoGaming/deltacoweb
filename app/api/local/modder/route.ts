@@ -1,15 +1,11 @@
 // app/api/modder/route.ts
 
+// app/api/modder/route.ts
+
 import { NextRequest, NextResponse } from 'next/server';
 import formidable, { File, IncomingForm } from 'formidable';
 import fs from 'fs';
 import path from 'path';
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
 
 const uploadDir = path.join(process.cwd(), 'public', 'mods');
 const communityLinksFile = path.join(uploadDir, 'community_links.json');
