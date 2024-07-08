@@ -1,7 +1,5 @@
 // app/api/modder/route.ts
 
-// app/api/modder/route.ts
-
 import { NextRequest, NextResponse } from 'next/server';
 import formidable, { File, IncomingForm } from 'formidable';
 import fs from 'fs';
@@ -73,5 +71,5 @@ export async function POST(request: NextRequest) {
       fs.writeFileSync(communityLinksFile, JSON.stringify(data, null, 2));
       resolve(NextResponse.json({ message: 'Upload successful' }));
     });
-  });
+  }) as Promise<NextResponse>;
 }

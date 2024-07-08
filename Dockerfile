@@ -1,4 +1,4 @@
-# Use the official Next.js image as a base
+# Use the official Node.js image as a base
 FROM node:18-alpine
 
 # Set the working directory
@@ -20,7 +20,8 @@ RUN npm run build
 EXPOSE 15000
 
 # Start the Next.js application
-CMD ["npm", "run", "start", "-H", "0.0.0.0", "-p", "15000"]
+CMD ["npx", "next", "start", "-H", "0.0.0.0", "-p", "15000"]
+
 
 
 ## docker build -t deltacoweb .
