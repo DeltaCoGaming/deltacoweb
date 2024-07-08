@@ -57,7 +57,7 @@ const ModsDownloadComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/modder');
+        const response = await axios.get('/api/local/modder');
         setMods(response.data.mods);
         setCommunityLinks(response.data.communityLinks);
       } catch (error) {
