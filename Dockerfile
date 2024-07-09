@@ -20,10 +20,10 @@ RUN npm run build
 EXPOSE 15000
 
 # Start the Next.js application
-CMD ["npx", "next", "start", "-H", "0.0.0.0", "-p", "15000"]
+CMD ["npx", "next", "start", "-H", "0.0.0.0", "-p", "15001"]
 
 
 
 ## docker build -t deltacoweb .
 
-## docker run -p 15000:15000 deltacoweb
+## docker run -p 15001:15001 deltacoweb
